@@ -20,109 +20,126 @@
   </head>
   
   <body>
-    <h1>Contact Information</h1>
-    <form>
-      <div>
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name">
-      </div>
-      <div>
-        <label for="phone">Phone:</label>
-        <input type="tel" id="phone" name="phone">
-      </div>
-      <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email">
-      </div>
+    <header>
+      <h1>Pizza Ordering Form</h1>
+    </header>
     
-      <h1>Select Pizza Size</h1>  
-      <label for="SelectSize">Select Size</label>
-      <select id="SelectSize" name="SelectSize">
-        <option value="">--Select Size--</option>
-        <option value="Medium">Medium</option>
-        <option value="Large">Large</option>
-        <option value="Extra Large">Extra Large</option>
-      </select>
-    
-      <h1>Select Sauce</h1>  
-      <div>
-        <input type="radio" id="Marinara" name="Sauce" value="Marinara">
-        <label for="Marinara">Marinara</label>
-      </div>
+    <main>
+      <form>
+        <section>
+          <h2>Contact Information</h2>
+          <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name">
+          </div>
+          <div>
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="phone">
+          </div>
+          <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+          </div>
+        </section>
       
-      <div>
-        <input type="radio" id="Ranch" name="Sauce" value="Ranch">
-        <label for="Ranch">Ranch</label>
-      </div>
+        <section>
+          <h2>Select Pizza Size</h2>  
+          <label for="SelectSize">Select Size:</label>
+          <select id="SelectSize" name="SelectSize">
+            <option value="">--Select Size--</option>
+            <option value="Medium">Medium</option>
+            <option value="Large">Large</option>
+            <option value="Extra Large">Extra Large</option>
+          </select>
+        </section>
       
-      <div>
-        <input type="radio" id="noSauce" name="Sauce" value="noSauce">
-        <label for="noSauce">No Sauce</label>
-      </div>
-      
-      <h1>Select Toppings</h1> 
-      <div>
-        <input type="checkbox" id="Pepperoni" name="Toppings" value="Pepperoni">
-        <label for="Pepperoni">Pepperoni</label>
+        <section>
+          <h2>Select Sauce</h2>  
+          <div>
+            <input type="radio" id="Marinara" name="Sauce" value="Marinara">
+            <label for="Marinara">Marinara</label>
+          </div>
+          <div>
+            <input type="radio" id="Ranch" name="Sauce" value="Ranch">
+            <label for="Ranch">Ranch</label>
+          </div>
+          <div>
+            <input type="radio" id="noSauce" name="Sauce" value="noSauce">
+            <label for="noSauce">No Sauce</label>
+          </div>
+        </section>
         
-        <input type="checkbox" id="Sausage" name="Toppings" value="Sausage">
-        <label for="Sausage">Sausage</label>
-      </div>
+        <section>
+          <h2>Select Toppings</h2> 
+          <div>
+            <input type="checkbox" id="Pepperoni" name="Toppings" value="Pepperoni">
+            <label for="Pepperoni">Pepperoni</label>
+            
+            <input type="checkbox" id="Sausage" name="Toppings" value="Sausage">
+            <label for="Sausage">Sausage</label>
+          </div>
+          <div>
+            <input type="checkbox" id="Mushroom" name="Toppings" value="Mushroom">
+            <label for="Mushroom">Mushroom</label>
+            
+            <input type="checkbox" id="Pineapple" name="Toppings" value="Pineapple">
+            <label for="Pineapple">Pineapple</label>
+          </div>
+          <div>
+            <input type="checkbox" id="peppers" name="toppings" value="peppers">
+            <label for="peppers">Peppers</label>
+            
+            <input type="checkbox" id="Onions" name="Toppings" value="Onions">
+            <label for="Onions">Onions</label>
+          </div>
+        </section>
       
-      <div>
-        <input type="checkbox" id="Mushroom" name="Toppings" value="Mushroom">
-        <label for="Mushroom">Mushroom</label>
-        
-        <input type="checkbox" id="Pineapple" name="Toppings" value="Pineapple">
-        <label for="Pineapple">Pineapple</label>
-      </div>
-      
-      <div>
-        <input type="checkbox" id="peppers" name="toppings" value="peppers">
-        <label for="peppers">Peppers</label>
-        
-        <input type="checkbox" id="Onions" name="Toppings" value="Onions">
-        <label for="Onions">Onions</label>
-      </div>
-    
-      <h1>Additional Instructions</h1>
-      <textarea id="Instructions" name="Instructions" placeholder="Add instructions"></textarea><br>
-      <button type="submit">Submit</button>
-    </form>
+        <section>
+          <h2>Additional Instructions</h2>
+          <textarea id="Instructions" name="Instructions" placeholder="Add instructions"></textarea><br>
+          <button type="submit">Submit</button>
+        </section>
+      </form>
 
-    <h2>List of My Favorite Games</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Developer</th>
-          <th>Title</th>
-          <th>Year</th>
-        </tr>
-      </thead>
-      
-      <tbody>
-        <tr>
-          <td rowspan="3">Bungie</td>
-          <td>destiny</td>
-          <td>2014</td>
-        </tr>
-        <tr>
-          <td>destiny 2</td>
-          <td>2017</td>
-        </tr>
-        <tr>
-          <td>Halo 3</td>
-          <td>2007</td>
-        </tr>
-        <tr>
-          <td>Hoopoo Games</td>
-          <td>Risk of Rain 2</td>
-          <td>2019</td>
-        </tr>
-        <tr>
-          <td colspan="3">Count: 4</td>
-        </tr>
-      </tbody>
-    </table>
+      <aside>
+        <h2>List of My Favorite Games</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Developer</th>
+              <th>Title</th>
+              <th>Year</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="3">Bungie</td>
+              <td>destiny</td>
+              <td>2014</td>
+            </tr>
+            <tr>
+              <td>destiny 2</td>
+              <td>2017</td>
+            </tr>
+            <tr>
+              <td>Halo 3</td>
+              <td>2007</td>
+            </tr>
+            <tr>
+              <td>Hoopoo Games</td>
+              <td>Risk of Rain 2</td>
+              <td>2019</td>
+            </tr>
+            <tr>
+              <td colspan="3">Count: 4</td>
+            </tr>
+          </tbody>
+        </table>
+      </aside>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 Pizza Ordering</p>
+    </footer>
   </body>
 </html>
