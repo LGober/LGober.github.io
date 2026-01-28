@@ -27,20 +27,62 @@
       <label for="SelectSize">Select Size</label>
       <select id="SelectSize" name="SelectSize">
           <option value="">--Select Size--</option>
-          <option value="medium">Medium</option>
-          <option value="large">Large</option>
-          <option value="extra large">Extra Large</option>
+          <option value="Medium">Medium</option>
+          <option value="Large">Large</option>
+          <option value="Extra Large">Extra Large</option>
       </select>
     
     <h1>Select Sauce</h1>  
-
-    
+      <form>
+        <div class="Option1">
+          <input type="radio" id="Marinara" name="Sauce" value="Marinara">
+          <label for="marinara">Marinara</label>
+        </div>
+        
+        <div class="Option2">
+          <input type="radio" id="Ranch" name="Sauce" value="Ranch">
+          <label for="ranch">Ranch</label>
+        </div>
+        
+        <div class="Option3">
+          <input type="radio" id="noSauce" name="Sauce" value="noSauce">
+          <label for="noSauce">No Sauce</label>
+        </div>
+      </form>
+      
     <h1>Select Toppings</h1> 
-
+      <form>
+        <div class="ToppingRow">
+          <input type="checkbox" id="Pepperoni" name="Toppings" value="Pepperoni">
+          <label for="Pepperoni">Pepperoni</label>
+          
+          <input type="checkbox" id="Sausage" name="Toppings" value="Sausage">
+          <label for="Sausage">Sausage</label>
+        </div>
+        
+        <div class="toppingRow">
+          <input type="checkbox" id="Mushroom" name="Toppings" value="Mushroom">
+          <label for="Mushroom">Mushroom</label>
+          
+          <input type="checkbox"  id="Pineapple"  name="Toppings"  value="Pineapple">
+          <label for="Pineapple">Pineapple</label>
+        </div>
+        
+        <div class="toppingRow">
+          <input type="checkbox"  id="peppers"  name="toppings"  value="peppers">
+          <label for="Peppers">Peppers</label>
+          
+          <input type="checkbox"  id="Onions"  name="Toppings"  value="Onions">
+          <label for="Onions">Onions</label>
+        </div>
+      </form>
     
     <strong><h1>Additional Instructions</h1></strong>
+      <form>
+        <textarea id="Instructions" name="Instructions" placeholder="Add instructions"></textarea><br>
+        <button type="submit">Submit</button>
+      </form><br>
 
-    
     <h3>List of My Favorite Games</h3>
     <table>
       <thead>
