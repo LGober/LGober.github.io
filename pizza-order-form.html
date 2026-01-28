@@ -30,22 +30,22 @@
           <h2>Contact Information</h2>
           <div>
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name">
+            <input type="text" id="name" name="name" required>
           </div>
           <div>
             <label for="phone">Phone:</label>
-            <input type="tel" id="phone" name="phone">
+            <input type="tel" id="phone" name="phone" required>
           </div>
           <div>
             <label for="email">Email:</label>
-            <input type="email" id="email" name="email">
+            <input type="email" id="email" name="email" required>
           </div>
         </section>
       
         <section>
           <h2>Select Pizza Size</h2>  
           <label for="SelectSize">Select Size:</label>
-          <select id="SelectSize" name="SelectSize">
+          <select id="SelectSize" name="SelectSize" required>
             <option value="">--Select Size--</option>
             <option value="Medium">Medium</option>
             <option value="Large">Large</option>
@@ -56,15 +56,15 @@
         <section>
           <h2>Select Sauce</h2>  
           <div>
-            <input type="radio" id="Marinara" name="Sauce" value="Marinara">
+            <input type="radio" id="Marinara" name="Sauce" value="Marinara" required>
             <label for="Marinara">Marinara</label>
           </div>
           <div>
-            <input type="radio" id="Ranch" name="Sauce" value="Ranch">
+            <input type="radio" id="Ranch" name="Sauce" value="Ranch" required>
             <label for="Ranch">Ranch</label>
           </div>
           <div>
-            <input type="radio" id="noSauce" name="Sauce" value="noSauce">
+            <input type="radio" id="noSauce" name="Sauce" value="noSauce" required>
             <label for="noSauce">No Sauce</label>
           </div>
         </section>
