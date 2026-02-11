@@ -38,14 +38,16 @@
         }
         
         #jumpMenu button:hover{
-            color: black;
-            background-color: blue;
+            background-color: yellow !important;
+            color: black !important;
         }
 
+        /* Styles for the article menu container */
         .article-menu {
             position: relative;
         }
 
+        /* Styles for nested article buttons */
         .article-links {
             max-height: 0;
             overflow: hidden;
@@ -135,6 +137,7 @@
             color: gray;
         }
 
+        /* First letter styling with Times New Roman and 36px */
         article p:first-of-type::first-letter {
             font-family: 'Times New Roman', Times, serif;
             font-size: 36px;
@@ -150,6 +153,7 @@
             padding-right: 15px;
         }
 
+        /* Wikipedia-style external link icon */
         article a::after {
             content: '';
             display: inline-block;
