@@ -74,7 +74,15 @@
     a:hover {
       text-decoration: underline;
     }
-
+      
+    header img {
+      width: 100%; 
+      max-width: 600px;
+      height: auto;
+      display: block;
+      margin-top: 10px;
+    }
+      
     /* phone style */
     @media screen and (max-width: 768px) {
       body {
@@ -99,6 +107,14 @@
 
       section {
         margin-bottom: 25px;
+      }
+      
+       header img {
+        width: 100%;
+        max-width: 320px;   /* cap image on phones */
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
       }
     }
 
