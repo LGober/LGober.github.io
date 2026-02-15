@@ -76,11 +76,15 @@
     }
       
     header img {
-      width: 100%; 
+      width: 100%;
       max-width: 600px;
       height: auto;
+      max-height: min(50vh, 600px);
+      object-fit: contain;   
       display: block;
       margin-top: 10px;
+      margin-left: auto;
+      margin-right: auto;
     }
       
     /* phone style */
@@ -111,7 +115,8 @@
       
        header img {
         width: 100%;
-        max-width: 320px;   /* cap image on phones */
+        max-width: 320px;
+        max-height: 40vh;
         height: auto;
         margin-left: auto;
         margin-right: auto;
