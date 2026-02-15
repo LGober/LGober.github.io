@@ -27,10 +27,17 @@
 
     header {
       margin-bottom: 20px;
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
     }
 
     h1 {
       margin-bottom: 10px;
+      width: 100%;
+      text-align: center;
     }
 
     address {
@@ -67,7 +74,7 @@
     }
 
     a {
-      color: #blue;
+      color: blue;
       text-decoration: none;
     }
 
@@ -76,15 +83,12 @@
     }
 
     header img {
-      width: 100%;
+      display: block;
+      width: 48%;
       max-width: 400px;
       height: auto;
-      max-height: min(50vh, 400px);
       object-fit: contain;   
-      display: block;
-      margin-top: 10px;
-      margin-left: auto;
-      margin-right: auto;
+      margin: 0;
     }
       
     /* phone style */
@@ -113,13 +117,17 @@
         margin-bottom: 25px;
       }
       
-       header img {
+      header {
+        /* stack content on narrow screens */
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+      
+      header img {
         width: 100%;
         max-width: 320px;
         max-height: 40vh;
-        height: auto;
-        margin-left: auto;
-        margin-right: auto;
       }
     }
 
@@ -153,7 +161,8 @@
       }
       
       header img {
-        width: 40%;
+        width: 45%;
+        max-width: 400px;
       }
     }
   </style>
