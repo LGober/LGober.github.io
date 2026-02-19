@@ -2,15 +2,169 @@
 <html lang="en">
     <head>
         <title>Recent Journal Articles</title>
-        <link rel="stylesheet" href="10_css.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <style>
+#showArea {
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    margin: auto;
+    margin-top: 30px;
+}
+
+#toggleButtons {
+    margin: auto;
+    display: flex;
+    width: 20%;
+    justify-content: space-evenly;
+}
+
+#toggleButtons > * {
+    height: 50px;
+    border-radius: 10px;
+}
+
+form#newContent {
+    display: none;
+    flex-direction: column;
+    margin: auto;
+    width: 75%;
+    align-items: center;
+}
+
+form#filterContent {
+    display: none;
+    margin: auto;
+}
+
+.formRow {
+    width: 400px;
+    font-size: 1.3em;
+}
+
+article.opinion { border: 1px solid red; }
+article.recipe  { border: 1px solid lightskyblue; }
+article.update  { border: 1px solid lightseagreen; }
+
+.marker {
+    float: right;
+    font-size: 1.5em;
+}
+
+.date {
+    float: left;
+    font-size: 1.5em;
+}
+
+.opinion .marker { background-color: red; }
+.recipe  .marker { background-color: lightskyblue; }
+.update  .marker { background-color: lightseagreen; }
+
+body {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+main { width: 100%; }
+
+main h1 {
+    text-align: center;
+    font-size: clamp(12px, 4vw, 24px);
+}
+
+header {
+    background-color: goldenrod;
+    text-align: center;
+    position: sticky;
+    top: 0px;
+    font-size: 2.5vw;
+    width: 100%;
+    margin: 0;
+    border: 1px solid black;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+main > div#articleList {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+article {
+    width: 30%;
+    margin-left: 1.5%;
+    margin-right: 1.5%;
+    text-align: justify;
+    font-size: clamp(8px, 1.5vw, 12px);
+    border-radius: 5px;
+}
+
+footer {
+    padding-top: 5vh;
+    font-size: 2vw;
+    padding-bottom: 10vh;
+    color: white;
+    background-color: black;
+}
+
+a:visited { color: darkblue; }
+
+footer p {
+    text-align: center;
+    margin: auto;
+    width: 50%;
+}
+
+address > div {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: space-evenly;
+    width: 75%;
+    margin: auto;
+}
+
+nav {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    justify-content: space-evenly;
+    background-color: black;
+}
+
+nav button {
+    color: white;
+    background-color: blue;
+    text-decoration: none;
+    font-size: 1.5vw;
+    display: inline;
+    width: 20%;
+    padding: 1vw 0vw;
+    text-wrap-mode: nowrap;
+}
+
+nav button:hover  { background-color: darkgoldenrod; }
+nav button:active { background-color: gold; }
+
+@media screen and (max-width: 600px) {
+    article { width: 75%; margin: auto; }
+}
+
+@media screen and (max-width: 1000px) {
+    main   { width: 100%; }
+    header { width: 100%; }
+}
+        </style>
     </head>
 
     <body>
 
         <header>
             <p>MyBlog.com</p>
-
             <nav>
                 <button href="recent.html">Recent Articles</button>
                 <button href="services.html">Services</button>
@@ -28,7 +182,6 @@
                     <button onclick="showAddNew()" id="addButton" type="button">Add New Article</button>
                 </div>
 
-
                 <form id="newContent">
                     <h2 class="formRow">Add New Article</h2>
 
@@ -36,12 +189,12 @@
                         <label for="inputHeader">Title: </label>
                         <input id="inputHeader" name="inputHeader" type="text">
                     </div>
-                    
+
                     <div class="formRow">
-                            <label>Type:</label>
-                            <input name="articleType" id="opinionRadio" type="radio"> <label for="opinionRadio">Opinion</label>
-                            <input name="articleType" id="recipeRadio" type="radio"> <label for="recipeRadio">Recipe</label>
-                            <input name="articleType" id="lifeRadio" type="radio"> <label for="lifeRadio">Life Update</label>
+                        <label>Type:</label>
+                        <input name="articleType" id="opinionRadio" type="radio"> <label for="opinionRadio">Opinion</label>
+                        <input name="articleType" id="recipeRadio" type="radio"> <label for="recipeRadio">Recipe</label>
+                        <input name="articleType" id="lifeRadio" type="radio"> <label for="lifeRadio">Life Update</label>
                     </div>
 
                     <div class="formRow">
@@ -153,15 +306,10 @@
         </main>
 
         <script>
-            // Initially hide both forms
-            document.getElementById('newContent').style.display = 'none';
-            document.getElementById('filterContent').style.display = 'none';
-
             function showFilter() {
                 const filterForm = document.getElementById('filterContent');
                 const newForm = document.getElementById('newContent');
-                // Toggle filter form, hide add form
-                if (filterForm.style.display === 'none') {
+                if (filterForm.style.display === 'none' || filterForm.style.display === '') {
                     filterForm.style.display = 'block';
                     newForm.style.display = 'none';
                 } else {
@@ -172,7 +320,6 @@
             function showAddNew() {
                 const filterForm = document.getElementById('filterContent');
                 const newForm = document.getElementById('newContent');
-                // Toggle add form, hide filter form
                 if (newForm.style.display === 'none' || newForm.style.display === '') {
                     newForm.style.display = 'flex';
                     filterForm.style.display = 'none';
@@ -183,45 +330,30 @@
 
             function filterArticles() {
                 const showOpinion = document.getElementById('opinionCheckbox').checked;
-                const showRecipe = document.getElementById('recipeCheckbox').checked;
-                const showUpdate = document.getElementById('updateCheckbox').checked;
+                const showRecipe  = document.getElementById('recipeCheckbox').checked;
+                const showUpdate  = document.getElementById('updateCheckbox').checked;
 
-                const opinions = document.querySelectorAll('article.opinion');
-                const recipes = document.querySelectorAll('article.recipe');
-                const updates = document.querySelectorAll('article.update');
-
-                opinions.forEach(a => a.style.display = showOpinion ? '' : 'none');
-                recipes.forEach(a => a.style.display = showRecipe ? '' : 'none');
-                updates.forEach(a => a.style.display = showUpdate ? '' : 'none');
+                document.querySelectorAll('article.opinion').forEach(a => a.style.display = showOpinion ? '' : 'none');
+                document.querySelectorAll('article.recipe').forEach(a  => a.style.display = showRecipe  ? '' : 'none');
+                document.querySelectorAll('article.update').forEach(a  => a.style.display = showUpdate  ? '' : 'none');
             }
 
             function addNewArticle() {
                 const title = document.getElementById('inputHeader').value.trim();
-                const text = document.getElementById('inputArticle').value.trim();
+                const text  = document.getElementById('inputArticle').value.trim();
                 const opinionSelected = document.getElementById('opinionRadio').checked;
-                const recipeSelected = document.getElementById('recipeRadio').checked;
-                const lifeSelected = document.getElementById('lifeRadio').checked;
+                const recipeSelected  = document.getElementById('recipeRadio').checked;
+                const lifeSelected    = document.getElementById('lifeRadio').checked;
 
-                if (!title) {
-                    alert('Please enter a title.');
-                    return;
-                }
+                if (!title) { alert('Please enter a title.'); return; }
                 if (!opinionSelected && !recipeSelected && !lifeSelected) {
-                    alert('Please select an article type.');
-                    return;
+                    alert('Please select an article type.'); return;
                 }
 
                 let typeClass, markerText;
-                if (opinionSelected) {
-                    typeClass = 'opinion';
-                    markerText = 'Opinion';
-                } else if (recipeSelected) {
-                    typeClass = 'recipe';
-                    markerText = 'Recipe';
-                } else {
-                    typeClass = 'update';
-                    markerText = 'Update';
-                }
+                if (opinionSelected)     { typeClass = 'opinion'; markerText = 'Opinion'; }
+                else if (recipeSelected) { typeClass = 'recipe';  markerText = 'Recipe'; }
+                else                     { typeClass = 'update';  markerText = 'Update'; }
 
                 const article = document.createElement('article');
                 article.classList.add(typeClass);
@@ -242,16 +374,15 @@
 
                 document.getElementById('articleList').appendChild(article);
 
-                // Apply current filter to the new article
+                // Respect current filter state for the new article
                 const showOpinion = document.getElementById('opinionCheckbox').checked;
-                const showRecipe = document.getElementById('recipeCheckbox').checked;
-                const showUpdate = document.getElementById('updateCheckbox').checked;
-
+                const showRecipe  = document.getElementById('recipeCheckbox').checked;
+                const showUpdate  = document.getElementById('updateCheckbox').checked;
                 if (typeClass === 'opinion' && !showOpinion) article.style.display = 'none';
-                if (typeClass === 'recipe' && !showRecipe) article.style.display = 'none';
-                if (typeClass === 'update' && !showUpdate) article.style.display = 'none';
+                if (typeClass === 'recipe'  && !showRecipe)  article.style.display = 'none';
+                if (typeClass === 'update'  && !showUpdate)  article.style.display = 'none';
 
-                // Clear form
+                // Clear the form
                 document.getElementById('inputHeader').value = '';
                 document.getElementById('inputArticle').value = '';
                 document.getElementById('opinionRadio').checked = false;
