@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pokémon Team Builder</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #90ee90;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+
+    .main-layout {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .search-card {
+      background: white;
+      border: 2px solid #ccc;
+      padding: 16px;
+      width: 320px;
+    }
+
+    .search-row-inner label {
+      display: block;
+      margin-bottom: 4px;
+      font-weight: bold;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 5px;
+      font-size: 14px;
+      border: 1px solid #999;
+    }
+
+    button {
+      padding: 5px 12px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .poke-display {
+      text-align: center;
+      margin: 10px 0;
+      min-height: 120px;
+    }
+
+    .poke-display img {
+      display: block;
+      margin: 0 auto;
+      image-rendering: pixelated;
+    }
+
+    .poke-name {
+      font-weight: bold;
+      text-transform: capitalize;
+      margin-bottom: 4px;
+    }
+
+    audio {
+      width: 100%;
+      margin: 8px 0;
+    }
+
+    .moves-label {
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    .moves-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    select {
+      width: 100%;
+      padding: 4px;
+      font-size: 13px;
+    }
+
+    .error-msg { color: red; font-size: 13px; }
+    .loading-msg { color: #555; font-size: 13px; }
+
+    /* Team */
+    .team-card {
+      background: white;
+      border: 2px solid #ccc;
+      padding: 16px;
+      width: 320px;
+      min-height: 80px;
+    }
+
+    .team-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .team-empty { color: #888; font-style: italic; }
+
+    .team-member {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .team-member:last-child { border-bottom: none; }
+
+    .team-member img {
+      width: 56px;
+      height: 56px;
+      image-rendering: pixelated;
+      object-fit: contain;
+    }
+
+    .team-member-name {
+      font-weight: bold;
+      text-transform: capitalize;
+      margin-bottom: 4px;
+    }
+
+    .team-moves { list-style: disc; padding-left: 16px; }
+    .team-moves li { font-size: 13px; line-height: 1.6; }
+  </style>
+</head>
+<body>
+
+<h1>Pokémon Team Builder</h1>
+
+<div class="main-layout">
+
+  <!-- SEARCH CARD -->
+  <div class="search-card">
+    <div class="search-row-inner">
+      <label for="pokeInput">NAME OR ID</label>
+      <div class="search-row">
+        <input type="text" id="pokeInput" placeholder="e.g. pikachu or 25" />
+        <button id="findBtn" onclick="findPokemon()">Find</button>
+      </div>
+    </div>
+
+    <div class="poke-display" id="pokeDisplay"></div>
+
+    <audio id="pokeCry" controls style="display:none; width:100%;"></audio>
+
+    <p class="moves-label" id="movesLabel" style="display:none;">Select 4 Moves:</p>
+    <div class="moves-grid" id="movesGrid" style="display:none;">
+      <select id="move1"></select>
+      <select id="move2"></select>
+      <select id="move3"></select>
+      <select id="move4"></select>
+    </div>
+
+    <button id="addBtn" style="display:none; margin-top:8px;" onclick="addToTeam()">Add to Team</button>
+    <div id="statusMsg"></div>
+  </div>
+
+  <!-- TEAM CARD -->
+  <div class="team-card">
+    <div class="team-title">My Team</div>
+    <div id="teamList">
+      <p class="team-empty">No Pokémon added yet.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Cache for API responses
+  const cache = {};
+  let currentPokemon = null;
+
+  const pokeInput = document.getElementById('pokeInput');
+  const findBtn   = document.getElementById('findBtn');
+  const pokeCry   = document.getElementById('pokeCry');
+  const movesGrid = document.getElementById('movesGrid');
+  const movesLabel= document.getElementById('movesLabel');
+  const addBtn    = document.getElementById('addBtn');
+  const statusMsg = document.getElementById('statusMsg');
+  const pokeDisplay = document.getElementById('pokeDisplay');
+  const teamList  = document.getElementById('teamList');
+
+  pokeInput.addEventListener('keydown', e => { if (e.key === 'Enter') findPokemon(); });
+
+  async function findPokemon() {
+    const query = pokeInput.value.trim().toLowerCase();
+    if (!query) return;
+
+    setStatus('loading', 'Searching...');
+    findBtn.disabled = true;
+    resetDisplay();
+
+    try {
+      let data;
+      if (cache[query]) {
+        data = cache[query];
+      } else {
+        const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${query}`);
+        if (!res.ok) throw new Error('Pokémon not found!');
+        data = await res.json();
+        cache[query] = data;
+      }
+
+      currentPokemon = data;
+      renderPokemon(data);
+      clearStatus();
+    } catch (err) {
+      setStatus('error', err.message || 'Error fetching Pokémon.');
+    } finally {
+      findBtn.disabled = false;
+    }
+  }
+
+  function renderPokemon(data) {
+    const name   = data.name;
+    const imgUrl = data.sprites?.front_default || '';
+    const cry    = data.cries?.latest || data.cries?.legacy || '';
+    const moves  = data.moves.map(m => m.move.name);
+
+    // Image + name
+    pokeDisplay.innerHTML = `
+      <div class="poke-name">${name}</div>
+      <img src="${imgUrl}" alt="${name}" width="120" height="120" />
+    `;
+
+    // Cry
+    if (cry) {
+      pokeCry.src = cry;
+      pokeCry.style.display = 'block';
+    } else {
+      pokeCry.style.display = 'none';
+    }
+
+    // Moves
+    const selects = [
+      document.getElementById('move1'),
+      document.getElementById('move2'),
+      document.getElementById('move3'),
+      document.getElementById('move4')
+    ];
+
+    selects.forEach((sel, i) => {
+      sel.innerHTML = moves.map(m => `<option value="${m}">${m}</option>`).join('');
+      // Default each to a different move if possible
+      sel.selectedIndex = Math.min(i, moves.length - 1);
+    });
+
+    movesGrid.style.display = 'grid';
+    movesLabel.style.display = 'block';
+    addBtn.style.display = 'block';
+  }
+
+  function addToTeam() {
+    if (!currentPokemon) return;
+
+    const name   = currentPokemon.name;
+    const imgUrl = currentPokemon.sprites?.front_default || '';
+
+    const selects = ['move1','move2','move3','move4'].map(id => document.getElementById(id).value);
+
+    // Clear empty state
+    const emptyMsg = teamList.querySelector('.team-empty');
+    if (emptyMsg) emptyMsg.remove();
+
+    const li = document.createElement('div');
+    li.className = 'team-member';
+    li.innerHTML = `
+      <img src="${imgUrl}" alt="${name}" />
+      <div class="team-member-info">
+        <div class="team-member-name">${name}</div>
+        <ul class="team-moves">
+          ${selects.map(m => `<li>${m}</li>`).join('')}
+        </ul>
+      </div>
+    `;
+    teamList.appendChild(li);
+  }
+
+  function resetDisplay() {
+    currentPokemon = null;
+    pokeDisplay.innerHTML = '';
+    pokeCry.style.display = 'none';
+    pokeCry.src = '';
+    movesGrid.style.display = 'none';
+    movesLabel.style.display = 'none';
+    addBtn.style.display = 'none';
+  }
+
+  function setStatus(type, msg) {
+    statusMsg.innerHTML = `<p class="${type === 'error' ? 'error-msg' : 'loading-msg'}">${msg}</p>`;
+  }
+
+  function clearStatus() {
+    statusMsg.innerHTML = '';
+  }
+</script>
+</body>
+</html>
